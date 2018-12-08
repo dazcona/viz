@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+    <div class="row">
+
+        <h1 class="page-header"> Figures </h1>
+
+        <div class="row">
+
+        {% for image in images %}
+
+            <div class="col-lg-3 col-md-4 col-xs-6">
+                <div class="card">
+                    <a href="{{ image.name }}" accesskey="{{ loop.index }}">
+                        <img class="card-img-top img-responsive" alt="{{ image.desc }}" src="{{url_for('static', filename=image.path) }}">
+                        <div class="card-block" align="center">
+                            <h4 class="card-title"> {{ image.desc | safe }} </h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        {% endfor %}
+
+        </div>
+
+    </div>
+
+{% endblock %}

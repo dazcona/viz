@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+
+	<h1 class="page-header">{{ student | capitalize }}'s transactions</h1>
+
+    <p>Using D3.org and NVD3</p>
+
+    <div id="chart">
+        <svg width="960" height="500"></svg>
+    </div>
+
+    <!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
+    <script src={{ url_for('static', filename='js/d3.v3.min.js') }}></script>
+    <script src={{ url_for('static', filename='js/nv.d3.min.js') }}></script>
+
+    <script>
+
+        var colors = {
+            "Reading": '#7c0587',
+            "Writing": '#0547b2',
+            "Coding": '#027511',
+            "Sleeping": '#d14d19',
+        };
+
+        var data = {{ transactions | safe }}
+        // console.log(data);
+        var dict = {};
+        var days = [];
+        for (t in data) {
+            if (!dict[data[t].activity])
+                dict[data[t].activity] = [];
+            var dt = new Date(data[t].date["$date"]);
+            var day = dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate();
+            if (!(day in dict[data[t].activity])) {
+                dict[data[t].activity][day] = 0
+            }
+            dict[data[t].activity][day] += data[t].duration;
+            days.push(day)
+        }
+        var new_data = [];
+        for (activity in dict) {
+            var array = [];
+            for (i = 0; i < days.length; i++) {
+                var day = days[i];
+                var num = 0;
+                if (day in dict[activity])
+                    num = dict[activity][day];
+                array.push(
+                    {
+                        label: day,
+                        value: num
+                    }
+                );
+            }
+            new_data.push({
+                key: activity,
+                values: array,
+                color: colors[activity]
+            });
+        }
+
+        // CHART
+
+        nv.addGraph(function() {
+
+            var chart = nv.models.multiBarHorizontalChart()
+                .x(function(d) { return d.label })
+                .y(function(d) { return d.value })
+                .margin({top: 30, right: 20, bottom: 50, left: 175})
+                .showValues(false)
+                .showControls(true); // Allow user to switch between "Grouped" and "Stacked" mode.
+            ;
+
+            chart.yAxis
+                .axisLabel('Duration')
+                .tickFormat(d3.format(',f'));
+
+            chart.tooltip.enabled()
+
+            d3.select('#chart svg')
+                .datum(new_data)
+                .transition().duration(500)
+                .call(chart);
+
+            nv.utils.windowResize(chart.update);
+
+            return chart;
+        });
+
+
+    </script>
+
+{% endblock %}

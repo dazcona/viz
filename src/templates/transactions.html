@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "macros.jnj" as common %}
+
+{% block page_content %}
+
+	<h1 class="page-header">{{ student | capitalize }}'s transactions</h1>
+
+    <table class="table table-bordered table-hover" >
+    <tr>
+        <th style="text-align:center"> Date </th>
+        <th style="text-align:center"> Duration </th>
+        <th style="text-align:center"> Activity </th>
+    </tr>
+
+    {% for t in transactions %}
+
+        <tr align="center">
+            <td> {{ t.date }} </td>
+            <td> {{ t.duration }} </td>
+            <td> {{ t.activity }} </td>
+        </tr>
+
+    {% endfor %}
+
+    </table>
+
+    {% if nav_offsets and nav_path %}
+          {{ common.display_nav(nav_path, nav_offsets) | safe }}
+    {% endif %}
+
+{% endblock %}

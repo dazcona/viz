@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+
+	<h1 class="page-header">{{ student | capitalize }}'s network</h1>
+
+    <p>Using NetworkX, D3 and jsnetworkx.org</p>
+
+    <div>
+        <svg id="one" height="400" width="100%"></svg>
+    </div>
+
+    <script src={{ url_for('static', filename='js/d3.v3.min.js') }}></script>
+    <script src={{ url_for('static', filename='js/jsnetworkx.js') }}></script>
+
+    <script>
+
+        var data = {{ transactions | safe }}
+
+        var G = new jsnx.MultiDiGraph();
+
+        var previous = "0";
+        G.addNode(previous);
+        G.node.get("0").color = '#0F0'; // start is green
+
+        for (t in data) {
+            var activity = data[t]["activity"];
+            var duration = data[t]["duration"];
+            var node = activity[0];
+            G.addEdge(previous, node, {weight: duration});
+            previous = node
+        }
+
+        jsnx.draw(G, {
+            element: '#one',
+            withLabels: true,
+            weighted: true,
+            nodeStyle: {
+                fill: function (d) {
+                    return d.data.color || '#AAA'; // any node without color is gray
+                }
+            },
+            nodeAttr: {
+                r: function (d) {
+                    // 'd' has the properties 'node', 'data' and 'G'
+                    return d.data.count || 15;
+                }
+            }
+        });
+
+    </script>
+
+{% endblock %}

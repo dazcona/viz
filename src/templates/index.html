@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+<!-- Include our common macro set -->
+{% import "macros.jnj" as common %}
+
+{% block page_content %}
+
+	<h1 class="page-header">Users</h1>
+
+    <table class="table table-bordered table-hover">
+    <tr>
+        <th style="text-align:center"> User </th>
+        <th style="text-align:center"> Plot Transactions </th>
+        <th style="text-align:center"> Network of Transactions</th>
+    </tr>
+
+    {% for student in students %}
+
+        <tr align="center">
+
+            <td>
+                <a href="/data/{{ student }}"> {{ student }} </a>
+            </td>
+            <td>
+                <a href="/plot/{{ student }}"> {{ student | capitalize }}'s Barchart </a>
+            </td>
+            <td>
+                <a href="/network/{{ student }}"> {{ student | capitalize }}'s Network </a>
+            </td>
+        </tr>
+
+    {% endfor %}
+
+    </table>
+
+    {% if nav_offsets and nav_path %}
+          {{ common.display_nav(nav_path, nav_offsets) | safe }}
+    {% endif %}
+
+{% endblock %}

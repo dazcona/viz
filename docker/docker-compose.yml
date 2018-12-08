@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    volumes:
+      - ../data/db:/data/db
+    command: mongod
+    env_file:
+      - ../config/.env
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: web
+    working_dir: /web
+    ports:
+      - "80:5000"
+    volumes:
+       - "../:/web"
+    command: "python -u /web/src/app.py"
+    depends_on:
+       - mongo
+    env_file:
+      - ../config/.env
