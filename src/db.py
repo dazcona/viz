@@ -39,7 +39,7 @@ def populate():
                 'duration': random.randint(0, 10),
                 'date': datetime(
                     year=2018, month=1, day=random.randint(1, 8), 
-                    hour=random.randint(0, 24), minute=random.randint(0, 60), second=random.randint(0, 60)
+                    hour=random.randint(0, 23), minute=random.randint(0, 59), second=random.randint(0, 59)
                 )
             } 
             for _ in range(config.NUM_ROWS)
