@@ -13,15 +13,15 @@ This template has been developed for users to show their Data Science results in
 ## Technologies
 
 * Python 3
-* MongoDB
-* Flask
-* Bootstrap
+* [MongoDB](https://www.mongodb.com/)
+* [Flask](http://flask.pocoo.org/)
+* [Bootstrap](https://getbootstrap.com/)
 * Javascript
-* D3
-* NVD3
-* NetworkX
-* JSNetworkX
-* (Optional) Docker
+* [D3](https://d3js.org/)
+* [NVD3](http://nvd3.org/)
+* [NetworkX](https://networkx.github.io/)
+* [JSNetworkX](http://jsnetworkx.org/)
+* (Optional) [Docker](https://www.docker.com/)
 
 ## Deployment
 
