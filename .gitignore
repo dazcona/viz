@@ -3,3 +3,4 @@ env/*
 src/*.pyc
 src/__pycache__
 data/
+video/viz.mov

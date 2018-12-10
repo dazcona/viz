@@ -2,6 +2,14 @@
 
 Visualization template that combines several frameworks and allows you to interact with your data on the web using D3 for interactive graphing and NetworkX for networks.
 
+## Desc
+
+This template has been developed for users to show their Data Science results in an easy and powerful way using technologies like Flask for a web application using Python, MongoDB to store your enourmous amount of data, D3 to plot interactive graphs on the web using NVD3 and NetworkX to plot your networks visualizations using JSNetworkX. It was been also made available as Docker containers with Docker Compose for usability.
+
+## Small clip
+
+![](video/viz.gif)
+
 ## Technologies
 
 * Python 3
